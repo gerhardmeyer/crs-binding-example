@@ -7,7 +7,69 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
-<body>
+<style>
+    html, body {
+        padding: 0;
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
 
+        --border: #dadada;
+    }
+
+    body {
+        display: grid;
+        grid-template-rows: 3rem 1fr 2rem;
+        grid-template-areas: "header" "main" "footer";
+    }
+
+    header {
+        grid-area: header;
+        border-bottom: var(--border) solid 1px;
+    }
+
+    header input {
+        margin: 0 1rem;
+    }
+
+    main {
+        grid-area: main;
+    }
+
+    footer {
+        grid-area: footer;
+        border-top: var(--border) solid 1px;
+    }
+
+    header, footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+</style>
+<body>
+    <header>
+        <label for="edtSearch">Search</label>
+        <input id="edtSearch" value.bind="searchText" />
+        <button click.call="add">Add</button>
+    </header>
+    <main>
+        <todo-list items.bind="items"></todo-list>
+    </main>
+    <footer>${title}</footer>
+
+    <script type="module" src="./node_modules/crs-binding/crs-binding.js"></script>
+    <script type="module" async>
+        import "./components/todo-list/todo-list.js";
+        import {ViewModel} from "./index.js";
+        const viewModel = new ViewModel();
+
+        crsbinding.parsers.parseElement(document.documentElement, viewModel).then(() => {
+            crsbinding.expression.updateUI(viewModel);
+            // crsbinding.events.notifyPropertyChanged(viewModel, "items");
+            // the update does not work because the keys comming back is _items and not items.
+        });
+    </script>
 </body>
 </html>
