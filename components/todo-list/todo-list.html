@@ -1,7 +1,9 @@
 <ul role="list">
     <template for="item of items">
         <li role="listitem">
-            <div>${item.description}</div>
+            <span classlist.if="isDone == true ? 'done'">${item.description}</span>
+            <input type="checkbox" checked.bind="item.isDone" />
+            <span>${item.isDone}</span>
         </li>
     </template>
 </ul>
